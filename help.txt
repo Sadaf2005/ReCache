@@ -1,0 +1,11 @@
+// in diff terminal run node index.js for starting 
+//redis-cli -p 8000  - staring server (under root folder) another terminal 
+//redis-cli for actual client
+//docker start redis-container  -docker container  
+//docker logs redis-container   for getting logs in terminal
+//docker stop redis-container   - stopping the run of container 
+
+
+
+
+
