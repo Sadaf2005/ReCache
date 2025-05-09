@@ -140,6 +140,42 @@ const commands = {
         const key = args[0];
         connection.write(sets[key]?.has(args[1]) ? ':1\r\n' : ':0\r\n');
     }
+    ,
+    subscribe: (args, connection) => {
+        args.forEach(channel => {
+            if (!subscriptions[channel]) subscriptions[channel] = [];
+            if (!subscriptions[channel].includes(connection)) {
+                subscriptions[channel].push(connection);
+            }
+        });
+        connection.write(`+Subscribed to: ${args.join(', ')}\r\n`);
+    },
+    
+    unsubscribe: (args, connection) => {
+        args.forEach(channel => {
+            if (subscriptions[channel]) {
+                subscriptions[channel] = subscriptions[channel].filter(sub => sub !== connection);
+                if (subscriptions[channel].length === 0) delete subscriptions[channel];
+            }
+        });
+        connection.write(`+Unsubscribed from: ${args.join(', ')}\r\n`);
+    },
+    
+    publish: (args, connection) => {
+        const [channel, ...messageParts] = args;
+        const message = messageParts.join(' ');
+        if (subscriptions[channel]) {
+            subscriptions[channel].forEach(sub => {
+                if (sub !== connection) {
+                    sub.write(`+Message from ${channel}: ${message}\r\n`);
+                }
+            });
+            connection.write(`:${subscriptions[channel].length}\r\n`);
+        } else {
+            connection.write(':0\r\n');
+        }
+    
+}
 };
 
 // Handle Key Expiry
