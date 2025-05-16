@@ -1,7 +1,5 @@
 # ReCache: A Custom Redis Server
 
-![ReCache Logo/Banner (Optional)]
-
 ## Project Overview
 
 This project, ReCache, is a custom implementation of a Redis-like in-memory data structure store built using **Node.js**. It provides a lightweight, in-memory key-value store designed to replicate some of the core functionalities and behaviors of the popular open-source Redis server. The goal is to offer a deeper understanding of how such high-performance data stores work, while being simple, extensible, and easy to use for learning, testing, or lightweight applications.
@@ -193,6 +191,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Connect with Me
 
-* GitHub: [Your GitHub Username]
-* LinkedIn: [Your LinkedIn Profile URL]
-* Email: [Your Email Address]
+* GitHub: [github.com/Sadaf2005]
+* Email: [alisadaf434@gmail.com]
