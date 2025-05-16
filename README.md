@@ -1,101 +1,198 @@
-Custom Redis Server Introduction This project is a custom implementation
-of a Redis-like server built using Node.js. It provides a lightweight,
-in-memory key-value store with support for basic Redis commands,
-transactions, expiry, and persistence. The server is designed to be
-simple, extensible, and easy to use, making it a great tool for
-learning, testing, or lightweight applications.
+# ReCache: A Custom Redis Server
 
-🚀 Features GET & SET -- Store and retrieve key-value pairs INCR & DECR
--- Atomic increment and decrement operations Lists (LPUSH, RPUSH, LPOP,
-RPOP, LRANGE) -- List operations for queue-like behavior EXPIRE & TTL --
-Time-to-live (TTL) for automatic key expiration DEL -- Remove keys from
-storage Persistence -- Data is saved inside a Docker container for
-durability Transaction Support -- MULTI, EXEC, and DISCARD for atomic
-operations (Planned) Pub/Sub (Coming Soon) -- Real-time messaging system
+![ReCache Logo/Banner (Optional)]
 
-📦 Setup & Installation 1️⃣ Clone the Repository Plain text ANTLR4 Bash C
-C# CSS CoffeeScript CMake Dart Django Docker EJS Erlang Git Go GraphQL
-Groovy HTML Java JavaScript JSON JSX Kotlin LaTeX Less Lua Makefile
-Markdown MATLAB Markup Objective-C Perl PHP PowerShell .properties
-Protocol Buffers Python R Ruby Sass (Sass) Sass (Scss) Scheme SQL Shell
-Swift SVG TSX TypeScript WebAssembly YAML XML
+## Project Overview
 
-shCopyEditgit clone https://github.com/yourusername/redix.git cd redix
+This project, ReCache, is a custom implementation of a Redis-like in-memory data structure store built using **Node.js**. It provides a lightweight, in-memory key-value store designed to replicate some of the core functionalities and behaviors of the popular open-source Redis server. The goal is to offer a deeper understanding of how such high-performance data stores work, while being simple, extensible, and easy to use for learning, testing, or lightweight applications.
 
-2️⃣ Start the Redix Server Run the server in one terminal: Plain text
-ANTLR4 Bash C C# CSS CoffeeScript CMake Dart Django Docker EJS Erlang
-Git Go GraphQL Groovy HTML Java JavaScript JSON JSX Kotlin LaTeX Less
-Lua Makefile Markdown MATLAB Markup Objective-C Perl PHP PowerShell
-.properties Protocol Buffers Python R Ruby Sass (Sass) Sass (Scss)
-Scheme SQL Shell Swift SVG TSX TypeScript WebAssembly YAML XML
+## 🚀 Features
 
-shCopyEditnode index.js
+ReCache is under active development and currently supports a range of fundamental Redis-like features:
 
-3️⃣ Start a Docker Container for Persistence Ensure Docker is installed,
-then run: Plain text ANTLR4 Bash C C# CSS CoffeeScript CMake Dart Django
-Docker EJS Erlang Git Go GraphQL Groovy HTML Java JavaScript JSON JSX
-Kotlin LaTeX Less Lua Makefile Markdown MATLAB Markup Objective-C Perl
-PHP PowerShell .properties Protocol Buffers Python R Ruby Sass (Sass)
-Sass (Scss) Scheme SQL Shell Swift SVG TSX TypeScript WebAssembly YAML
-XML
+* **GET & SET:** Store and retrieve key-value pairs.
+* **INCR & DECR:** Perform atomic increment and decrement operations on numeric values.
+* **Lists (LPUSH, RPUSH, LPOP, RPOP, LRANGE):** Implement list operations for managing ordered sequences of elements, suitable for queue-like behaviors.
+* **EXPIRE & TTL:** Set a time-to-live (TTL) for keys, allowing for automatic expiration.
+* **DEL:** Remove keys and their associated values from storage.
+* **Persistence:** Data is saved inside a Docker container for basic durability.
+* **Transaction Support (MULTI, EXEC, DISCARD):** (Planned) Support for atomic execution of command batches.
+* **Pub/Sub:** (Coming Soon) A real-time messaging system for publish/subscribe functionality.
 
-shCopyEditdocker run --name redix-container -v \$(pwd)/data:/data -d
-redix-image
+## Motivation
 
-(Replace redix-image with your actual image name.) To restart the
-container after stopping it: Plain text ANTLR4 Bash C C# CSS
-CoffeeScript CMake Dart Django Docker EJS Erlang Git Go GraphQL Groovy
-HTML Java JavaScript JSON JSX Kotlin LaTeX Less Lua Makefile Markdown
-MATLAB Markup Objective-C Perl PHP PowerShell .properties Protocol
-Buffers Python R Ruby Sass (Sass) Sass (Scss) Scheme SQL Shell Swift SVG
-TSX TypeScript WebAssembly YAML XML
+The primary motivations behind building ReCache include:
 
-shCopyEditdocker start redix-container
+* **Educational Purposes:** To gain a comprehensive understanding of the internal workings of an in-memory data store like Redis, including network programming, data structure management, and protocol implementation.
+* **Exploring Performance:** To experiment with different implementation techniques and data structures in Node.js to understand their impact on performance.
+* **Customization and Specialization:** To create a base for building a data store with specific optimizations or features not present in the standard Redis.
+* **Skill Development:** To enhance skills in Node.js development, network programming, and understanding database internals.
 
-4️⃣ Connect a Custom Redis Client Open another terminal and run: Plain
-text ANTLR4 Bash C C# CSS CoffeeScript CMake Dart Django Docker EJS
-Erlang Git Go GraphQL Groovy HTML Java JavaScript JSON JSX Kotlin LaTeX
-Less Lua Makefile Markdown MATLAB Markup Objective-C Perl PHP PowerShell
-.properties Protocol Buffers Python R Ruby Sass (Sass) Sass (Scss)
-Scheme SQL Shell Swift SVG TSX TypeScript WebAssembly YAML XML
+## Tech Stack
 
-shCopyEditredis-cli -p 8001
+ReCache is built using the following technologies:
 
-Quick Guide to Test the Server Basic Commands bashCopy127.0.0.1:8000\>
-SET mykey "Hello, World!"+OK bashCopy127.0.0.1:8000\> GET
-mykey\$13Hello, World! bashCopy127.0.0.1:8000\> DEL mykey:1
-bashCopy127.0.0.1:8000\> SET counter 10+OK127.0.0.1:8000\> INCR
-counter:11 bashCopy127.0.0.1:8000\> DECR counter:10
+* **Core Programming Language:** Node.js
+* **Protocol Parsing:** Likely utilizes a library like `redis-parser` for handling the Redis Serialization Protocol (RESP).
+* **Data Structures:** Custom or built-in Node.js data structures for key-value storage and list implementations.
+* **Networking:** Node.js's built-in networking modules for handling TCP connections.
 
-List Commands bashCopy127.0.0.1:8000\> LPUSH mylist
-"item1":1127.0.0.1:8000\> RPUSH mylist "item2":2
-bashCopy127.0.0.1:8000\> LPOP mylist\$5item1127.0.0.1:8000\> RPOP
-mylist\$5item2 bashCopy127.0.0.1:8000\> LRANGE mylist 0 -1\*0
+## 📦 Setup & Installation
 
-Expiry Commands bashCopy127.0.0.1:8000\> SET tempkey
-"tempvalue"+OK127.0.0.1:8000\> EXPIRE tempkey 10:1
-bashCopy127.0.0.1:8000\> TTL tempkey:8
+To get a local copy of ReCache up and running, follow these steps:
 
-Transaction Commands bashCopy127.0.0.1:8000\> MULTI+OK
-bashCopy127.0.0.1:8000\> SET key1 "value1"+QUEUED127.0.0.1:8000\> INCR
-counter+QUEUED bashCopy127.0.0.1:8000\> EXEC\*2+OK:11
-bashCopy127.0.0.1:8000\> MULTI+OK127.0.0.1:8000\> SET key2
-"value2"+QUEUED127.0.0.1:8000\> DISCARD+OK
+1. **Clone the Repository:**
 
-Future Enhancements Support for more data types (e.g., sets, hashes,
-sorted sets). Implement clustering for horizontal scaling. Add
-authentication and security features. Optimize performance and add
-benchmarking.
+   ```bash
+   git clone https://github.com/Sadaf2005/ReCache.git
+   ```
 
-Contributing Contributions are welcome! If you'd like to contribute,
-please follow these steps: Fork the repository. Create a new branch for
-your feature or bugfix. Submit a pull request with a detailed
-description of your changes.
+2. **Navigate to the project directory:**
 
-License This project is licensed under the MIT License. See
-the LICENSE file for details. Acknowledgments Inspired by the
-official Redis project. Built using Node.js and
-the redis-parser library.
+   ```bash
+   cd ReCache
+   ```
 
-Connect with Me GitHub: your-username LinkedIn: Your Name
-Email: your.email@example.co
+3. **Install Dependencies:**
+   *(Assuming a `package.json` with dependencies)*
+
+   ```bash
+   npm install
+   # or yarn install
+   ```
+
+4. **Start the ReCache Server:**
+   Run the server in one terminal:
+
+   ```bash
+   node index.js
+   ```
+   The server should start and listen on port `8001`.
+
+5. **Start a Docker Container for Persistence (Optional but Recommended):**
+   Ensure Docker is installed, then build your Docker image (if you haven't already, based on a provided Dockerfile in the repo) and run:
+
+   ```bash
+   docker build -t recache-image . # Build the image if a Dockerfile exists
+   docker run --name recache-container -v $(pwd)/data:/data -d recache-image
+   ```
+   (Replace `recache-image` with your actual image name if different.)
+
+   To restart the container after stopping it:
+
+   ```bash
+   docker start recache-container
+   ```
+
+## Quick Guide to Test the Server
+
+You can connect to the ReCache server using the `redis-cli` tool (assuming you have it installed) or other compatible Redis clients.
+
+Open another terminal and run:
+
+```bash
+redis-cli -p 8001
+```
+
+### Supported Commands
+
+#### Basic Commands
+```
+127.0.0.1:8001> SET mykey "Hello, World!"
++OK
+127.0.0.1:8001> GET mykey
+$13
+Hello, World!
+127.0.0.1:8001> DEL mykey
+:1
+127.0.0.1:8001> SET counter 10
++OK
+127.0.0.1:8001> INCR counter
+:11
+127.0.0.1:8001> DECR counter
+:10
+```
+
+#### List Commands
+```
+127.0.0.1:8001> LPUSH mylist "item1"
+:1
+127.0.0.1:8001> RPUSH mylist "item2"
+:2
+127.0.0.1:8001> LPOP mylist
+$5
+item1
+127.0.0.1:8001> RPOP mylist
+$5
+item2
+127.0.0.1:8001> LRANGE mylist 0 -1
+*0
+```
+
+#### Expiry Commands
+```
+127.0.0.1:8001> SET tempkey "tempvalue"
++OK
+127.0.0.1:8001> EXPIRE tempkey 10
+:1
+127.0.0.1:8001> TTL tempkey
+:8
+```
+
+#### Transaction Commands (If Implemented)
+```
+127.0.0.1:8001> MULTI
++OK
+127.0.0.1:8001> SET key1 "value1"
++QUEUED
+127.0.0.1:8001> INCR counter
++QUEUED
+127.0.0.1:8001> EXEC
+*2
++OK
+:11
+127.0.0.1:8001> MULTI
++OK
+127.0.0.1:8001> SET key2 "value2"
++QUEUED
+127.0.0.1:8001> DISCARD
++OK
+```
+
+## Future Enhancements
+
+The following features are planned for future development:
+
+* Support for more data types (e.g., sets, hashes, sorted sets)
+* Implement clustering for horizontal scaling
+* Add authentication and security features
+* Optimize performance and add benchmarking
+* Full implementation of Pub/Sub
+
+## Contributing
+
+Contributions to ReCache are welcome! If you find bugs, have suggestions for improvements, or want to add new features, feel free to:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -am 'Add some feature'`)
+5. Push to the branch (`git push origin feature/your-feature`)
+6. Create a new Pull Request
+
+Please ensure your code adheres to any existing coding styles and includes appropriate tests if applicable.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgments
+
+* Inspired by the official Redis project
+* Built using Node.js and potentially the `redis-parser` library *(Confirm library usage from code)*
+
+## Connect with Me
+
+* GitHub: [Your GitHub Username]
+* LinkedIn: [Your LinkedIn Profile URL]
+* Email: [Your Email Address]

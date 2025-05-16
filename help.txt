@@ -6,6 +6,18 @@
 //docker stop redis-container   - stopping the run of container 
 
 
+//test for pub-sub feature
+node index.js
+node subscriber.js
+node publisher.js  (exp output-📡 Subscriber connected 📨 Received: message from channel 'news': Breaking News!) && ✅ Publisher connected 📢 Published to channel 'news': "Breaking News!" 📥 Server response: :1)
+
+
+
+
+
+
+
+
 
 
 
